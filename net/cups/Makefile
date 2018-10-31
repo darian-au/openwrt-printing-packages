@@ -8,16 +8,14 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=cups
-PKG_VERSION:=2.1.4
-PKG_RELEASE:=5
+PKG_VERSION:=2.2.8
+PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-source.tar.gz
-PKG_SOURCE_URL:= \
-	http://ftp.rz.tu-bs.de/pub/mirror/ftp.easysw.com/ftp/pub/cups/$(PKG_VERSION) \
-	ftp://ftp.easysw.com/pub/cups/$(PKG_VERSION) \
-	ftp://ftp3.easysw.com/pub/cups/$(PKG_VERSION) \
-	http://www.cups.org/software/$(PKG_VERSION)
-PKG_MD5SUM:=9f9bf6e3b9c20a3519b4dc409666d6e7
+PKG_SOURCE_URL:=https://github.com/apple/cups/releases/download/v$(PKG_VERSION)/
+PKG_HASH:=33150d08993a04c8e22176e93805a051
+PKG_LICENSE:=GPL-2.0
+PKG_LICENSE_FILES:=LICENSE.txt
 
 TARGET_LDFLAGS+=-Wl,-rpath-link=$(STAGING_DIR)/usr/lib
 
@@ -446,7 +444,7 @@ define Package/cups/install
 		$(1)/usr/lib/cups/filter
 	$(INSTALL_DIR) $(1)/usr/share/cups
 	#$(CP) $(PKG_INSTALL_DIR)/usr/share/cups/* $(1)/usr/share/cups
-	$(INSTALL_DIR) $(1)/usr/share/cups/templates 
+	$(INSTALL_DIR) $(1)/usr/share/cups/templates
 	$(CP) $(PKG_INSTALL_DIR)/usr/share/cups/templates/*.tmpl \
 		$(1)/usr/share/cups/templates/
 	$(INSTALL_DIR) $(1)/usr/share/cups/mime
