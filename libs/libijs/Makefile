@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=http://www.openprinting.org/download/ijs/download/
-PKG_MD5SUM:=896fdcb7a01c586ba6eb81398ea3f6e9
+PKG_MD5SUM:=11a5f5084488c480f3ff5a24d64d7147bb64272bf60a0ba51330a56c5b50cab9
 
 PKG_INSTALL:=1
 

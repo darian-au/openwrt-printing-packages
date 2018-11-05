@@ -12,8 +12,8 @@ PKG_VERSION:=2.2.8
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-source.tar.gz
-PKG_SOURCE_URL:=https://github.com/apple/cups/releases/download/v$(PKG_VERSION)/
-PKG_HASH:=33150d08993a04c8e22176e93805a051
+PKG_SOURCE_URL:=https://github.com/apple/cups/releases/download/v$(PKG_VERSION)
+PKG_HASH:=3968fc1d26fc48727508db1c1380e36c6694ab90177fd6920aec5f6cc73af9e4
 PKG_LICENSE:=GPL-2.0
 PKG_LICENSE_FILES:=LICENSE.txt
 

@@ -1,6 +1,8 @@
+diff --git a/configure b/configure
+index 9134476..e58dc99 100644
 --- a/configure
 +++ b/configure
-@@ -5896,7 +5896,7 @@ fi
+@@ -6087,7 +6087,7 @@ fi
  
  case "$COMPONENTS" in
  	all)

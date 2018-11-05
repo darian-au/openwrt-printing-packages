@@ -8,12 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=qpdf
-PKG_VERSION:=6.0.0
+PKG_VERSION:=8.2.1
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=@SF/$(PKG_NAME)
-PKG_MD5SUM:=e014bd3ecf1c4d1a520bbc14d84ac20e
+PKG_HASH:=f445d3ebda833fe675b7551378f41fa1971cc6f7a7921bbbb94d3a71a404abc9
 
 PKG_INSTALL:=1
 
@@ -23,7 +23,7 @@ define Package/qpdf
   SECTION:=utils
   CATEGORY:=Utilities
   TITLE:=QPDF is a command-line program for transformations on PDF files.
-  DEPENDS:= +libpcre +zlib +libstdcpp
+  DEPENDS:= +libpcre +zlib +libstdcpp +libjpeg
   URL:=http://qpdf.sourceforge.net/
   SUBMENU:=Printing
 endef
@@ -40,6 +40,7 @@ CONFIGURE_ARGS+= \
 	--with-random=/dev/urandom
 
 define Build/Patch
+	$(call Build/Patch/Default)
 	cd $(PKG_BUILD_DIR); sed -i 's|@LIBTOOL@|$$$$(SHELL) $$$$(top_builddir)/libtool --tag=CXX|' autoconf.mk.in
 endef
 

@@ -11,7 +11,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=cups-filters-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=http://www.openprinting.org/download/cups-filters/
-PKG_HASH:=981b280bc5275a21c6f436aff6207e03cab36dc304c119bbac507db940e7421c
+PKG_HASH:=f5a61222148f68d0afc3bb5960eda167f9bcd0055dcd4c5c4a6909f1a79126e0
 PKG_BUILD_DIR:=$(BUILD_DIR)/cups-filters-$(PKG_VERSION)
 
 PKG_INSTALL:=1
