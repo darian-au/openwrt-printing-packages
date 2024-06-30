@@ -1,0 +1,13 @@
+diff --git a/bjnp-commands.c b/bjnp-commands.c
+--- a/bjnp-commands.c
++++ b/bjnp-commands.c
+@@ -185,7 +185,7 @@
+ 
+     /* set IEEE1284_id */
+ 
+-    if (printer_id != NULL) {
++    if ((uintptr_t)printer_id != (uintptr_t)NULL) {
+         strncpy(printer_id, id.udp_identity_response.id, id_len);
+         printer_id[id_len] = '\0';
+     }
+

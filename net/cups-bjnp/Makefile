@@ -8,12 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=cups-bjnp
-PKG_VERSION:=1.2
+PKG_VERSION:=2.0.3
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=@SF/cups-bjnp
-PKG_MD5SUM:=8672b4585b71dee6dcefa00fbbbe7698
+PKG_MD5SUM:=1d5a1588f3649ce7c5758cbea5a86900
 
 PKG_BUILD_DEPENDS:=cups
 
@@ -43,6 +43,5 @@ define Package/cups-bjnp/install
 	$(INSTALL_DIR) $(1)/usr/lib/cups/backend
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bjnp $(1)/usr/lib/cups/backend
 endef
-
 
 $(eval $(call BuildPackage,cups-bjnp))
