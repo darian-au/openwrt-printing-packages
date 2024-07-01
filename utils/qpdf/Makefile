@@ -8,23 +8,24 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=qpdf
-PKG_VERSION:=8.2.1
+PKG_VERSION:=11.9.1
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=@SF/$(PKG_NAME)
-PKG_HASH:=f445d3ebda833fe675b7551378f41fa1971cc6f7a7921bbbb94d3a71a404abc9
+PKG_SOURCE_URL:=https://github.com/qpdf/qpdf/releases/download/v$(PKG_VERSION)
+PKG_MD5SUM:=22dcfec7700e4d8b08a116ecc1c529ac
 
-PKG_INSTALL:=1
+CMAKE_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
+include $(INCLUDE_DIR)/cmake.mk
 
 define Package/qpdf
   SECTION:=utils
   CATEGORY:=Utilities
   TITLE:=QPDF is a command-line program for transformations on PDF files.
-  DEPENDS:= +libpcre +zlib +libstdcpp +libjpeg
-  URL:=http://qpdf.sourceforge.net/
+  DEPENDS:=+libpcre +zlib +libstdcpp +libatomic +libopenssl +libgnutls +libjpeg
+  URL:=https://qpdf.sourceforge.io
   SUBMENU:=Printing
 endef
 
@@ -36,13 +37,8 @@ or for people who just want to look at the innards of a PDF file to learn more
 about how they work.
 endef
 
-CONFIGURE_ARGS+= \
-	--with-random=/dev/urandom
-
-define Build/Patch
-	$(call Build/Patch/Default)
-	cd $(PKG_BUILD_DIR); sed -i 's|@LIBTOOL@|$$$$(SHELL) $$$$(top_builddir)/libtool --tag=CXX|' autoconf.mk.in
-endef
+CMAKE_OPTIONS += \
+	-DBUILD_DOC:BOOL=OFF
 
 define Package/qpdf/install
 	$(INSTALL_DIR) $(1)/usr/bin $(1)/usr/lib
