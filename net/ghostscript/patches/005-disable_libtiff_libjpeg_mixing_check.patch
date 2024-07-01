@@ -1,0 +1,21 @@
+diff --git a/configure b/configure
+--- a/configure
++++ b/configure
+@@ -10341,11 +10341,11 @@
+ 
+ # Skip this check for the recursive configure call.
+ # Not relevant for AUX tools.
+-if test x"$enable_auxtools_only" != x"yes" ; then
+-  if test x"$ENABLETIFF" != x"" && test x"$SHARE_LIBTIFF" != x"$SHARE_LIBJPEG" ; then
+-    as_fn_error $? "Mixing local libtiff with shared libjpeg not supported" "$LINENO" 5
+-  fi
+-fi
++# if test x"$enable_auxtools_only" != x"yes" ; then
++#   if test x"$ENABLETIFF" != x"" && test x"$SHARE_LIBTIFF" != x"$SHARE_LIBJPEG" ; then
++#     as_fn_error $? "Mixing local libtiff with shared libjpeg not supported" "$LINENO" 5
++#   fi
++# fi
+ 
+ CGLAGS_STORE=$CFLAGS
+ CFLAGS=-Wno-misleading-indentation
+
