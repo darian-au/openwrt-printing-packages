@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2013 OpenWrt.org
+# Copyright (C) 2008-2016 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -8,32 +8,37 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=fontconfig
-PKG_VERSION:=2.10.91
-PKG_RELEASE:=2
+PKG_VERSION:=2.15.0
+PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-PKG_SOURCE_URL:=http://fontconfig.org/release/
-PKG_MD5SUM:=a4727954e950c0b8ae71580e2328bf54457d835ff3023ae4bd7221f9073e63ee
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
+PKG_SOURCE_URL:=https://www.freedesktop.org/software/fontconfig/release/
+PKG_MD5SUM:=5bb3a2829aecb22ae553c39099bd0d6a
 
-PKG_INSTALL:=1
+PKG_BUILD_DEPENDS:=gperf/host
 
 include $(INCLUDE_DIR)/package.mk
+include $(INCLUDE_DIR)/meson.mk
 
 define Package/fontconfig
   SECTION:=utils
   CATEGORY:=Utilities
   TITLE:=Fontconfig, configure and customize font access
   DEPENDS:=+libfreetype +libexpat +libpthread
-  URL:=http://fontconfig.org
+  URL:=https://www.freedesktop.org/wiki/Software/fontconfig/
   SUBMENU:=Printing
 endef
 
 define Package/fontconfig/description
-	The Fontconfig package contains a library and support programs used for
-        configuring and customizing font access.
+	Fontconfig is a library for configuring and customizing font access.
 endef
 
-CONFIGURE_ARGS+= --disable-docs
+MESON_ARGS += \
+	-Ddoc=disabled \
+	-Ddoc-txt=disabled \
+	-Dnls=disabled \
+	-Dtests=disabled \
+	-Dtools=enabled
 
 define Package/fontconfig/install
 	$(INSTALL_DIR) $(1)/usr/bin $(1)/usr/lib $(1)/usr/share/fontconfig/conf.avail
@@ -69,11 +74,12 @@ exit 0
 endef
 
 define Build/InstallDev
-	$(INSTALL_DIR) $(1)/usr/bin $(1)/usr/lib
-	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/* $(1)/usr/bin/
-	$(INSTALL_DIR) $(1)/usr/include $(1)/usr/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/include/* $(1)/usr/include/
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/* $(1)/usr/lib
+	$(INSTALL_DIR) $(1)/usr/include
+	$(CP) $(PKG_INSTALL_DIR)/usr/include/fontconfig $(1)/usr/include/
+	$(INSTALL_DIR) $(1)/usr/lib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libfontconfig.* $(1)/usr/lib/
+	$(INSTALL_DIR) $(1)/usr/lib/pkgconfig
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/pkgconfig/fontconfig.pc $(1)/usr/lib/pkgconfig/
 endef
 
 $(eval $(call BuildPackage,fontconfig))
