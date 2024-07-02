@@ -6,24 +6,26 @@
 #
 
 include $(TOPDIR)/rules.mk
+include $(INCLUDE_DIR)/nls.mk
 
 PKG_NAME:=poppler
-PKG_VERSION:=0.53.0
+PKG_VERSION:=24.07.0
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
-PKG_SOURCE_URL:=http://poppler.freedesktop.org/
-PKG_HASH:=592bf72960c6b5948b67657594b05e72d9a278daf7613c9f3cdff9a5b73096a8
+PKG_SOURCE_URL:=https://poppler.freedesktop.org/
+PKG_MD5SUM:=1382c323753da20825feeaa74b6e89f8
 
 PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
+include $(INCLUDE_DIR)/cmake.mk
 
 define Package/poppler
   SECTION:=utils
   CATEGORY:=Utilities
   TITLE:=Poppler PDF rendering library
-  DEPENDS:=+libpng +libtiff +libjpeg +zlib +lcms2 +fontconfig +libpthread +libfreetype +libstdcpp
+  DEPENDS:=+libpng +libtiff +libjpeg +zlib +lcms2 +fontconfig +libpthread +libfreetype +libstdcpp +libcairo +glib2 +libintl-full +curl +libnss +nspr
   URL:=http://poppler.freedesktop.org/
   SUBMENU:=Printing
 endef
@@ -32,20 +34,22 @@ define Package/poppler/description
 	Poppler is a PDF rendering library based on the xpdf-3.0 code base.
 endef
 
-CONFIGURE_ARGS+= \
-	--without-x \
-	--disable-gtk-test \
-	--disable-poppler-qt4 \
-	--disable-poppler-qt5 \
-	--disable-gtk-doc-html \
-	--enable-gtk-doc-html=no \
-	--enable-poppler-cpp \
-	--enable-xpdf-headers \
-	--enable-zlib \
-	--enable-libjpeg \
-	--enable-cms=lcms2 \
-	--disable-poppler-cpp \
-	--with-font-configuration=fontconfig
+CMAKE_OPTIONS += \
+	-DENABLE_GLIB=OFF \
+	-DENABLE_GTK_DOC=OFF \
+	-DBUILD_GTK_TESTS=OFF \
+	-DENABLE_QT5=OFF \
+	-DENABLE_QT6=OFF \
+	-DBUILD_QT5_TESTS=OFF \
+	-DBUILD_QT6_TESTS=OFF \
+	-DENABLE_BOOST=OFF \
+	-DENABLE_CPP=OFF \
+	-DENABLE_ZLIB_UNCOMPRESS=ON \
+	-DENABLE_LIBOPENJPEG=none \
+	-DENABLE_DCTDECODER=libjpeg \
+	-DENABLE_GPGME=OFF \
+	-DUSE_CMS=lcms2 \
+	-DFONT_CONFIGURATION=fontconfig
 
 define Package/poppler/install
 	$(INSTALL_DIR) $(1)/usr/bin $(1)/usr/lib
@@ -55,8 +59,8 @@ endef
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/include/cpp $(1)/usr/lib
-	$(CP) -r $(PKG_INSTALL_DIR)/usr/include/poppler $(1)/usr/include/
-	$(CP) -r $(PKG_BUILD_DIR)/cpp/poppler-version.h $(1)/usr/include/cpp
+	# $(CP) -r $(PKG_INSTALL_DIR)/usr/include/poppler $(1)/usr/include/
+	# $(CP) -r $(PKG_BUILD_DIR)/cpp/poppler-version.h $(1)/usr/include/cpp
 	$(CP) -r $(PKG_BUILD_DIR)/cpp/poppler-global.h $(1)/usr/include/cpp
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/* $(1)/usr/lib
 endef
