@@ -8,12 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=lcms2
-PKG_VERSION:=2.9
+PKG_VERSION:=2.16
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=@SF/lcms
-PKG_HASH:=48c6fdf98396fa245ed86e622028caf49b96fa22f3e5734f853f806fbc8e7d20
+PKG_SOURCE_URL:=https://github.com/mm2/Little-CMS/releases/download/lcms$(PKG_VERSION)
+PKG_MD5SUM:=f219d87c247957c97020a3859d8d6fa8
 
 PKG_INSTALL:=1
 
@@ -29,7 +29,8 @@ define Package/lcms2
 endef
 
 define Package/lcms2/description
-	Little CMS color engine
+	Little CMS intends to be an open source small-footprint color management 
+	engine, with special focus on accuracy and performance.
 endef
 
 define Package/lcms2/install
