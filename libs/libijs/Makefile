@@ -23,6 +23,7 @@ define Package/libijs
   SECTION:=libs
   CATEGORY:=Libraries
   TITLE:=IJS raster image transport protocol
+  URL:=https://github.com/ArtifexSoftware/ghostpdl/tree/master/ijs
   SUBMENU:=Printing
 endef
 
