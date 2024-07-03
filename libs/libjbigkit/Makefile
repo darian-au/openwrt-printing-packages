@@ -13,11 +13,12 @@ PKG_CAT:=zcat
 include $(INCLUDE_DIR)/package.mk
 
 define Package/libjbigkit
-	SECTION:=libs
-	CATEGORY:=Libraries
-	TITLE:=JBIG-KIT library
-	DEPENDS:=
-	URL:=http://freecode.com/projects/jbigkit/
+  SECTION:=libs
+  CATEGORY:=Libraries
+  TITLE:=JBIG-KIT library
+  DEPENDS:=
+  URL:=http://freecode.com/projects/jbigkit/
+  SUBMENU:=Printing
 endef
 
 define Package/libjbigkit/description
