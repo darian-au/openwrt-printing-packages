@@ -4,31 +4,32 @@ This is a [package feed] aiming at providing a complete printing stack
 for OpenWrt.
 
 Notably it has:
-- Ghostscript 9.06
-- Gutenprint 5.2.12
-- Cups 1.6.3
-- OpenPrinting's cups-filters 1.14.1
-- poppler 0.53.0
+- Ghostscript 10.03.1
+- Gutenprint 5.3.4
+- Cups 2.4.10
+- OpenPrinting's cups-filters 1.28.17
+- Poppler 24.07.0
+- QPDF 11.9.1
+- Fontconfig 2.15.0
 - many other packages to make sure the ones above work...
 
-[package feed]: http://wiki.openwrt.org/doc/devel/feeds
-
-[timesys.com]: http://repository.timesys.com/buildsources/g/ghostscript/
+[package feed]: https://openwrt.org/docs/guide-developer/feeds
 
 ### To use this feed,
 
 - set up your router to use [external storage] for its root file
   system, as these packages require more than a 100 MB of space.
 
-[external storage]: http://wiki.openwrt.org/doc/howto/extroot
+[external storage]: https://openwrt.org/docs/guide-user/additional-software/extroot_configuration
 
 - set up a [cross-compilation environment]
-[cross-compilation environment]: http://wiki.openwrt.org/doc/devel/crosscompile
+
+[cross-compilation environment]: https://openwrt.org/docs/guide-developer/toolchain/crosscompile
 
 - add this line to your `feeds.conf` or `feeds.conf.default`
 
 ```
-src-git printing git://github.com/lawyiu/openwrt-printing-packages.git
+src-git printing https://github.com/darian-au/openwrt-printing-packages.git
 ```
 
 - to compile everything in this feed you should use the script `setup-buildsystem.sh` or some variation of those commands.
@@ -52,8 +53,11 @@ src/gz printing file:/storage/printer/packages
 ### Issues / Missing / TODO
 
 Caveat: Ghostscript lacks proper cross-compilation support. I used a
-patch taken from [timesys.com]. If your architecture is not there,
+patch taken from [timesys.com] and [termux-packages]. If your architecture is not there,
 compiling it just won't work for you.
+
+[termux-packages]: https://github.com/termux/termux-packages/tree/master/packages/ghostscript
+[timesys.com]: http://repository.timesys.com/buildsources/g/ghostscript/
 
 The alternative for those who can't compile Ghostscript is to use a
 different PDF backend, in this case Poppler. For instructions of how
