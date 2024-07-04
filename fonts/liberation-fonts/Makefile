@@ -6,11 +6,11 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=liberation-fonts-ttf
-PKG_VERSION:=2.00.1
+PKG_VERSION:=2.1.5
 PKG_RELEASE:=1
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://releases.pagure.org/liberation-fonts/
-PKG_MD5SUM:=7890278a6cd17873c57d9cd785c2d230d9abdea837e96516019c5885dd271504
+PKG_SOURCE_URL:=https://github.com/liberationfonts/liberation-fonts/files/7261482/
+PKG_MD5SUM:=31b453e0b77bacde410a34a725b34f8a
 
 include $(INCLUDE_DIR)/package.mk
 
