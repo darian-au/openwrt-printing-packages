@@ -1,0 +1,22 @@
+diff --git a/configure b/configure
+--- a/configure
++++ b/configure
+@@ -9607,12 +9607,18 @@
+                  #if FREETYPE_MAJOR < 2
+                    FAIL
+                  #endif
++                 #if FREETYPE_MAJOR == 2
+                  #if FREETYPE_MINOR < 4
+                    FAIL
+                  #endif
++                 #endif
++                 #if FREETYPE_MAJOR == 2
++                 #if FREETYPE_MINOR == 4
+                  #if FREETYPE_PATCH < 2
+                    FAIL
+                  #endif
++                 #endif
++                 #endif
+                  return(0);
+ 
+   ;

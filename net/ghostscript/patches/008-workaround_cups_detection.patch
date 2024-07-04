@@ -1,7 +1,7 @@
 diff --git a/configure b/configure
 --- a/configure
 +++ b/configure
-@@ -10752,7 +10752,7 @@
+@@ -10758,7 +10758,7 @@
    ;;
  esac
  fi

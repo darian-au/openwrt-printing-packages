@@ -1,7 +1,7 @@
 diff --git a/configure b/configure
 --- a/configure
 +++ b/configure
-@@ -10341,11 +10341,11 @@
+@@ -10347,11 +10347,11 @@
  
  # Skip this check for the recursive configure call.
  # Not relevant for AUX tools.
