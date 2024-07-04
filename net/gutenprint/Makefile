@@ -8,15 +8,16 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=gutenprint
-PKG_VERSION:=5.2.12
+PKG_VERSION:=5.3.4-2024-06-25T13-20-6665bfaa
 PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=@SF/gimp-print
-PKG_HASH:=a42489fd7d6f2e4320811754bb80b0cd845db6632b52f819fbc2b4b75057341b
+PKG_MD5SUM:=4c446b98d8185adfc96b3ac3617190a4
 
-PKG_BUILD_DEPENDS:=gutenprint-cups/host cups libiconv
-HOST_BUILD_DEPENDS:=libiconv/host
+PKG_BUILD_DEPENDS:=gutenprint/host cups ghostscript libiconv-full
+HOST_BUILD_DEPENDS:=libiconv-full/host
+
 PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/host-build.mk
@@ -28,7 +29,7 @@ define Package/gutenprint-cups
   CATEGORY:=Network
   TITLE:=gutenprint-cups -- Gutenprint CUPS drivers
   # XXX FIXME perl is required by cups-genppdupdate, but it needs more libs
-  DEPENDS:=+cups +libcupsimage +libiconv
+  DEPENDS:=+cups +libcupsimage +libiconv-full +ghostscript
   URL:=http://gimp-print.sourceforge.net/
   SUBMENU:=Printing
 endef
@@ -38,7 +39,7 @@ endef
 #   CATEGORY:=Network
 #   TITLE:=gutenprint-foomatic -- Gutenprint Foomatic drivers
 #   # perl is required by cups-genppdupdate
-#   DEPENDS:=+ghostscript +libiconv
+#   DEPENDS:=+ghostscript +libiconv-full
 #   URL:=http://gimp-print.sourceforge.net/
 #   SUBMENU:=Printing
 # endef
@@ -53,8 +54,6 @@ CONFIGURE_ARGS+= \
 	--disable-test \
 	--without-doc \
 	--without-readline \
-	--without-foomatic \
-	--without-foomatic3 \
 	--enable-escputil=no \
 	--enable-test=no \
 	--disable-translated-cups-ppds \
