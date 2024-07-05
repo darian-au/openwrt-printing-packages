@@ -16,7 +16,7 @@ PKG_SOURCE_URL:=@SF/gimp-print
 PKG_MD5SUM:=4c446b98d8185adfc96b3ac3617190a4
 
 PKG_BUILD_DEPENDS:=gutenprint/host cups ghostscript libiconv-full
-HOST_BUILD_DEPENDS:=libiconv-full/host
+HOST_BUILD_DEPENDS:=cups libiconv-full/host
 
 PKG_INSTALL:=1
 
