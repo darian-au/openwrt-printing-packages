@@ -6,20 +6,21 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=hplip
-PKG_VERSION:=3.21.6
+PKG_VERSION:=3.24.4
 PKG_RELEASE:=2
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=@SF/hplip
-PKG_HASH:=cc3360d3d913684fb080db97a434b04be45e2cef23cc5bc4cbc5f64b0c5e7bca
+PKG_HASH:=5d7643831893a5e2addf9d42d581a5dbfe5aaf023626886b8762c5645da0f1fb
 
 PKG_MAINTAINER:=Luiz Angelo Daros de Luca <luizluca@gmail.com>
 PKG_LICENSE:=GPL-2.0 GPL-2.0-or-later
 PKG_LICENSE_FILES:=COPYING LICENSE
 
-PKG_BUILD_PARALLEL:=1
 PKG_BUILD_DEPENDS:=cups
 PKG_FIXUP:=autoreconf
+
+PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -59,18 +60,17 @@ $(call Package/hplip/Default/description)
 S.A.N.E backend for HP Scanners
 endef
 
-CONFIGURE_ARGS += \
-	--disable-gui-build \
-	--disable-network-build \
-	--disable-fax-build \
-	--disable-pp-build \
-	--disable-doc-build \
-	--disable-dbus-build \
-	--disable-hpijs-only-build \
-	--disable-hpcups-install \
-	--disable-hpps-install \
-	--disable-cups-drv-install \
-	--enable-lite-build
+define Build/Configure
+	(cd $(PKG_BUILD_DIR) && $(MAKE) -f Makefile_dat2drv)
+	$(call Build/Configure/Default, \
+        --disable-gui-build \
+        --disable-network-build \
+        --disable-fax-build \
+        --disable-pp-build \
+        --disable-doc-build \
+        --disable-imageProcessor-build \
+        --enable-lite-build)
+endef
 
 define Build/Install
 	mkdir -p $(PKG_INSTALL_DIR)/usr/share/sane
@@ -89,6 +89,9 @@ define Package/hplip-common/install
 
 	$(INSTALL_DIR) $(1)/usr/share/hplip/data/models/
 	$(CP) $(PKG_BUILD_DIR)/data/models/models.dat $(1)/usr/share/hplip/data/models/
+
+	$(INSTALL_DIR) $(1)/etc/hotplug.d/usb/
+	$(INSTALL_BIN) ./files/20-hplip $(1)/etc/hotplug.d/usb/
 endef
 
 define Package/hplip-sane/install
