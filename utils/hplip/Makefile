@@ -7,7 +7,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=hplip
 PKG_VERSION:=3.24.4
-PKG_RELEASE:=2
+PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=@SF/hplip
@@ -17,7 +17,6 @@ PKG_MAINTAINER:=Luiz Angelo Daros de Luca <luizluca@gmail.com>
 PKG_LICENSE:=GPL-2.0 GPL-2.0-or-later
 PKG_LICENSE_FILES:=COPYING LICENSE
 
-PKG_BUILD_PARALLEL:=1
 PKG_BUILD_DEPENDS:=cups
 PKG_FIXUP:=autoreconf
 
