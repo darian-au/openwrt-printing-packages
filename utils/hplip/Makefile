@@ -17,10 +17,9 @@ PKG_MAINTAINER:=Luiz Angelo Daros de Luca <luizluca@gmail.com>
 PKG_LICENSE:=GPL-2.0 GPL-2.0-or-later
 PKG_LICENSE_FILES:=COPYING LICENSE
 
+PKG_BUILD_PARALLEL:=1
 PKG_BUILD_DEPENDS:=cups
 PKG_FIXUP:=autoreconf
-
-PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
