@@ -468,6 +468,8 @@ define Package/cups/install
 		$(1)/usr/share/doc/cups/
 	$(CP) $(PKG_INSTALL_DIR)/usr/share/doc/cups/images \
 		$(1)/usr/share/doc/cups/
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/doc/cups/help \
+		$(1)/usr/share/doc/cups/
 	$(INSTALL_DIR) $(1)/usr/sbin
 	# overwrite default config with our own
 	$(CP) ./files/etc/cups/* $(1)/etc/cups/
