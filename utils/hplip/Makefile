@@ -37,7 +37,7 @@ endef
 define Package/hplip-common
 $(call Package/hplip/Default)
   TITLE+= (common files)
-  DEPENDS+=+libusb-1.0
+  DEPENDS+=+libusb-1.0 +libcups +libcupsimage +libjpeg +libstdcpp +zlib
 endef
 
 define Package/hplip-common/description
@@ -61,13 +61,14 @@ endef
 define Build/Configure
 	(cd $(PKG_BUILD_DIR) && $(MAKE) -f Makefile_dat2drv)
 	$(call Build/Configure/Default, \
-        --disable-gui-build \
-        --disable-network-build \
-        --disable-fax-build \
-        --disable-pp-build \
-        --disable-doc-build \
-        --disable-imageProcessor-build \
-        --enable-lite-build)
+	--disable-gui-build \
+	--disable-network-build \
+	--disable-fax-build \
+	--disable-pp-build \
+	--disable-doc-build \
+	--disable-imageProcessor-build \
+	--enable-lite-build \
+	UNAME="$(ARCH)")
 endef
 
 define Build/Install
@@ -87,6 +88,15 @@ define Package/hplip-common/install
 
 	$(INSTALL_DIR) $(1)/usr/share/hplip/data/models/
 	$(CP) $(PKG_BUILD_DIR)/data/models/models.dat $(1)/usr/share/hplip/data/models/
+
+	$(INSTALL_DIR) $(1)/usr/share/cups/drv
+	$(CP) $(PKG_BUILD_DIR)/prnt/drv/*.drv $(1)/usr/share/cups/drv/
+
+	$(INSTALL_DIR) $(1)/usr/lib/cups/filter
+	$(CP) $(PKG_BUILD_DIR)/{hpcups,hpps} $(1)/usr/lib/cups/filter/
+
+	$(INSTALL_DIR) $(1)/usr/share/ppd/hpcups
+	$(CP) $(PKG_BUILD_DIR)/ppd/hpcups/*.ppd.gz $(1)/usr/share/ppd/hpcups/
 
 	$(INSTALL_DIR) $(1)/etc/hotplug.d/usb/
 	$(INSTALL_BIN) ./files/20-hplip $(1)/etc/hotplug.d/usb/
