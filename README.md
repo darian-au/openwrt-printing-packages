@@ -10,6 +10,7 @@ Notably it has:
 - OpenPrinting's cups-filters 1.28.17
 - Poppler 24.07.0
 - QPDF 11.9.1
+- HPLIP 3.24.4
 - Fontconfig 2.15.0
 - many other packages to make sure the ones above work...
 
