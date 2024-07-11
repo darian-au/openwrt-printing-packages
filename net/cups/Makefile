@@ -30,6 +30,7 @@ $(call Package/cups/Default)
   CATEGORY:=Network
   DEPENDS:=+libcups +libcupsimage
   TITLE:=Common UNIX Printing System (daemon)
+  USERID:=lp=7:lp=7:lpadmin=124
 endef
 
 define Package/cups/description
@@ -37,7 +38,6 @@ define Package/cups/description
 endef
 
 define Package/cups/conffiles
-/etc/cups/classes.conf
 /etc/cups/cupsd.conf
 /etc/cups/printers.conf
 endef
@@ -394,10 +394,10 @@ endef
 
 define Build/Configure
 	$(call Build/Configure/Default, \
-		--with-cups-user="nobody" \
-		--with-cups-group="nogroup" \
-		--with-system-groups="root" \
-		--with-local_protocols='dnssd' \
+		--with-cups-user="lp" \
+		--with-cups-group="lp" \
+		--with-system-groups="lpadmin root" \
+		--with-local_protocols="dnssd" \
 		--enable-default-shared \
 		--enable-shared \
 		--enable-image \
@@ -437,10 +437,10 @@ define Package/cups/install
 	ln -sf /tmp $(1)/etc/cups/certs
 	rm -f $(1)/usr/bin/cups-config
 	$(INSTALL_DIR) $(1)/usr/lib/cups
-	### OpenPrinting cups-filters --------------------------------
+	## OpenPrinting cups-filters ---------------------------------
 	rm -f $(PKG_INSTALL_DIR)/usr/lib/cups/backend/parallel
 	rm -f $(PKG_INSTALL_DIR)/usr/lib/cups/backend/serial
-	###-----------------------------------------------------------
+	## -----------------------------------------------------------
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cups/backend $(1)/usr/lib/cups
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cups/cgi-bin $(1)/usr/lib/cups
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cups/daemon $(1)/usr/lib/cups
@@ -451,15 +451,16 @@ define Package/cups/install
 		$(PKG_INSTALL_DIR)/usr/lib/cups/filter/gziptoany \
 		$(1)/usr/lib/cups/filter
 	$(INSTALL_DIR) $(1)/usr/share/cups
-	#$(CP) $(PKG_INSTALL_DIR)/usr/share/cups/* $(1)/usr/share/cups
+	# $(CP) $(PKG_INSTALL_DIR)/usr/share/cups/* $(1)/usr/share/cups
 	$(INSTALL_DIR) $(1)/usr/share/cups/templates
 	$(CP) $(PKG_INSTALL_DIR)/usr/share/cups/templates/*.tmpl \
 		$(1)/usr/share/cups/templates/
 	$(INSTALL_DIR) $(1)/usr/share/cups/mime
 	$(CP) $(PKG_INSTALL_DIR)/usr/share/cups/mime/* $(1)/usr/share/cups/mime/
-	### Do not install any docs.
-	### Do install docs: cups web interface relies on them
+	## Install docs for web interface
 	$(INSTALL_DIR) $(1)/usr/share/doc/cups
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/doc/cups/apple-touch-icon.png \
+                $(1)/usr/share/doc/cups/
 	$(CP) $(PKG_INSTALL_DIR)/usr/share/doc/cups/*.*html \
 		$(1)/usr/share/doc/cups/
 	$(CP) $(PKG_INSTALL_DIR)/usr/share/doc/cups/*.css \
@@ -471,15 +472,16 @@ define Package/cups/install
 	$(CP) $(PKG_INSTALL_DIR)/usr/share/doc/cups/help \
 		$(1)/usr/share/doc/cups/
 	$(INSTALL_DIR) $(1)/usr/sbin
-	# overwrite default config with our own
+	## Overwrite default config with our own
 	$(CP) ./files/etc/cups/* $(1)/etc/cups/
-	# install initscript with priority 60
+	## Install initscript with priority 70 (after avahi-daemon)
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/cupsd.init $(1)/etc/init.d/cupsd
 	$(INSTALL_BIN) \
 		$(PKG_INSTALL_DIR)/usr/sbin/{cupsctl,cupsd} \
 		$(1)/usr/sbin/
-	# needed for cups to find usb printers per http://wiki.openwrt.org/doc/howto/cups.server
+	## Permissions for cups to find usb printers 
+	## see http://wiki.openwrt.org/doc/howto/cups.server
 	chmod 700 $(1)/usr/lib/cups/backend/usb
 endef
 
@@ -498,8 +500,8 @@ endef
 define Package/cups-client/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) \
-		$(PKG_INSTALL_DIR)/usr/bin/{lp,cancel,cupstestppd} \
-		$(PKG_INSTALL_DIR)/usr/bin/{ipptool,lpoptions,lpstat} \
+		$(PKG_INSTALL_DIR)/usr/bin/{lp,cancel,cupstestppd,ippeveprinter} \
+		$(PKG_INSTALL_DIR)/usr/bin/{ippfind,ipptool,lpoptions,lpstat} \
 		$(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/usr/sbin
 	$(INSTALL_BIN) \
