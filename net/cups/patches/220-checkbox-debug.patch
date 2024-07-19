@@ -1,0 +1,13 @@
+diff --git a/cgi-bin/var.c b/cgi-bin/var.c
+index 529a40a51..1ffbe917d 100644
+--- a/cgi-bin/var.c
++++ b/cgi-bin/var.c
+@@ -193,6 +193,8 @@ cgiGetCheckbox(const char *name)	/* I - Name of form field */
+ 
+   ret = value && !_cups_strcasecmp(value, "checked");
+ 
++  fprintf(stderr, "cgiGetCheckbox: %s=\"%d\"\n", name, ret);
++
+   if (!ret && value)
+   {
+    /*

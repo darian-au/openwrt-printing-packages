@@ -452,6 +452,10 @@ define Package/cups/install
 		$(1)/usr/lib/cups/filter
 	$(INSTALL_DIR) $(1)/usr/share/cups
 	# $(CP) $(PKG_INSTALL_DIR)/usr/share/cups/* $(1)/usr/share/cups
+	# The ipptool test scripts can help debug problems.
+	$(INSTALL_DIR) $(1)/usr/share/cups/ipptool
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/cups/ipptool/*.test \
+		$(1)/usr/share/cups/ipptool/
 	$(INSTALL_DIR) $(1)/usr/share/cups/templates
 	$(CP) $(PKG_INSTALL_DIR)/usr/share/cups/templates/*.tmpl \
 		$(1)/usr/share/cups/templates/

@@ -1,0 +1,38 @@
+diff --git a/scheduler/conf.c b/scheduler/conf.c
+index 0d4bb6ae3..cdc8d376b 100644
+--- a/scheduler/conf.c
++++ b/scheduler/conf.c
+@@ -1061,6 +1061,13 @@ cupsdReadConfiguration(void)
+ 
+   cupsdSetStringf(&DefaultLocale, "%s.UTF-8", DefaultLanguage);
+ 
++  if (LogLevel >= CUPSD_LOG_DEBUG)
++  {
++    cupsdLogMessage(CUPSD_LOG_DEBUG, "cupsdReadConfiguration: %s=\"%s\"", "system language", language->language);
++    cupsdLogMessage(CUPSD_LOG_DEBUG, "cupsdReadConfiguration: %s=\"%s\"", "DefaultLanguage", DefaultLanguage);
++    cupsdLogMessage(CUPSD_LOG_DEBUG, "cupsdReadConfiguration: %s=\"%s\"", "DefaultLocale", DefaultLocale);
++  }
++
+  /*
+   * Update all relative filenames to include the full path from ServerRoot...
+   */
+@@ -1264,6 +1271,19 @@ cupsdReadConfiguration(void)
+       ReadyPaperSizes = _cupsArrayNewStrings(DefaultPaperSize, ',');
+   }
+ 
++  if (LogLevel >= CUPSD_LOG_DEBUG)
++  {
++    cupsdLogMessage(CUPSD_LOG_DEBUG, "cupsdReadConfiguration: %s=\"%s\"", 
++      "DefaultPaperSize", DefaultPaperSize);
++
++    int n = cupsArrayCount(ReadyPaperSizes);
++    for (int i = 0; i < n; i++)
++    {
++      cupsdLogMessage(CUPSD_LOG_DEBUG, "cupsdReadConfiguration: %s[%d]=\"%s\"", 
++        "ReadyPaperSizes", i, (char *) cupsArrayIndex(ReadyPaperSizes, i));
++    }
++  }
++
+  /*
+   * Update classification setting as needed...
+   */

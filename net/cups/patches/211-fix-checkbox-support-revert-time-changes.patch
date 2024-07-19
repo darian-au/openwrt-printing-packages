@@ -1,0 +1,31 @@
+From 50ea4936a177e3baf99c0fe7a1bde6a12dc66298 Mon Sep 17 00:00:00 2001
+From: Zdenek Dohnal <zdohnal@redhat.com>
+Date: Thu, 18 Jul 2024 10:24:03 +0200
+Subject: [PATCH] Revert time changes
+
+---
+ cgi-bin/admin.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/cgi-bin/admin.c b/cgi-bin/admin.c
+index 692643db3..62e1c8fd0 100644
+--- a/cgi-bin/admin.c
++++ b/cgi-bin/admin.c
+@@ -1331,7 +1331,7 @@ do_config_server(http_t *http)		/* I - HTTP connection */
+ 
+ 	if (!preserve_job_files || !preserve_job_files[0] ||
+ 	    (strcasecmp(preserve_job_files, "yes") && strcasecmp(preserve_job_files, "no") && !atoi(preserve_job_files)))
+-	  preserve_job_files = "86400";
++	  preserve_job_files = "1d";
+       }
+       else
+       {
+@@ -1396,7 +1396,7 @@ do_config_server(http_t *http)		/* I - HTTP connection */
+     if ((current_preserve_job_files = cupsGetOption("PreserveJobFiles",
+                                                     num_settings,
+ 						    settings)) == NULL)
+-      current_preserve_job_files = "86400";
++      current_preserve_job_files = "1d";
+ 
+     if ((current_max_clients = cupsGetOption("MaxClients", num_settings,
+                                              settings)) == NULL)
